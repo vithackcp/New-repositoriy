@@ -1,25 +1,37 @@
-#include <iostream>
-using namespace std;
+#include "vector_operations.h"
+#include <gtest/gtest.h>
 
-void drawTriangle(int n) {
-    for (int i = 1; i <= n; ++i) {
-        for (int j = 0; j < n - i; ++j) {
-            cout << "+";
-        }
-        for (int j = 0; j < 2 * i - 1; ++j) {
-            cout << "*";
-        }
-        for (int j = 0; j < n - i; ++j) {
-            cout << "+";
-        }
-        cout << endl;
-    }
+TEST(IncreaseElementsTest, HandlesEmptyVector) {
+    std::vector<int> input = {};
+    std::vector<int> expected = {};
+    EXPECT_EQ(increase_elements(input, 5), expected);
 }
 
-int main() {
-    int n;
-    cout << "Введите высоту треугольника: ";
-    cin >> n;
-    drawTriangle(n);
-    return 0;
+TEST(IncreaseElementsTest, HandlesSingleElementVector) {
+    std::vector<int> input = {1};
+    std::vector<int> expected = {6};
+    EXPECT_EQ(increase_elements(input, 5), expected);
+}
+
+TEST(IncreaseElementsTest, HandlesMultipleElementsVector) {
+    std::vector<int> input = {1, 2, 3};
+    std::vector<int> expected = {6, 7, 8};
+    EXPECT_EQ(increase_elements(input, 5), expected);
+}
+
+TEST(IncreaseElementsTest, HandlesNegativeElements) {
+    std::vector<int> input = {-1, -2, -3};
+    std::vector<int> expected = {4, 3, 2};
+    EXPECT_EQ(increase_elements(input, 5), expected);
+}
+
+TEST(IncreaseElementsTest, HandlesZeroIncrement) {
+    std::vector<int> input = {1, 2, 3};
+    std::vector<int> expected = {1, 2, 3};
+    EXPECT_EQ(increase_elements(input, 0), expected);
+}
+
+int main(int argc, char **argv) {
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 }
